@@ -177,10 +177,10 @@ export default {
           if (response.status === 200) {
             console.log("test");
             this.loading = false;
-            this.showToast("Image uploaded successfully!", "#4CAF50");
+            this.showToast("Image uploaded successfully to the API!", "#4CAF50");
           }
         } finally {
-          this.showToast("Image uploaded faild!", "red");
+          this.showToast("Image uploaded faild to the API!", "red");
           this.loading = false;
         }
       }
