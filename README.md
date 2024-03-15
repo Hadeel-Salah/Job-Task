@@ -96,4 +96,12 @@ Locally preview production build:
 npm run preview
 ```
 
+## Testing
+
+Run the application testing:
+
+```bash
+npm run test
+```
+
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
