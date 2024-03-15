@@ -1,44 +1,5 @@
-vi.mock('toastify-js', () => ({
-  Toastify: vi.fn().mockImplementation(() => ({
-    showToast: vi.fn(),
-  })),
-}));
-
-
-import { describe, it, expect, vi } from 'vitest';
-import app from '../app.vue';
-
-
-describe('Component Method Existence', () => {
-    test('showLoadingToast method is defined', async () => {
-      const { default: component } = await import('../app.vue');
-  
-      expect(component).toBeDefined();
-  
-      expect(component.methods).toBeDefined();
-      
-        expect(typeof component.methods?.showLoadingToast).toBe('function');
-
-    });
-  });
-  
-  describe('Component Method Existence', () => {
-    test('showToastErrorSize method is defined', async () => {
-      const { default: component } = await import('../app.vue');
-  
-      // Check if the component is defined
-      expect(component).toBeDefined();
-  
-      expect(component.methods).toBeDefined();
-      
-        expect(typeof component.methods?.showToastErrorSize).toBe('function');
-
-    });
-  });
-
-
-
-  const mockBase64String = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==';
+const mockBase64String =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
 
 // Mocking FileReader
 class MockFileReader {
@@ -71,14 +32,12 @@ class MockFileReader {
 }
 
 // Mocking FileReader globally
-global.FileReader = MockFileReader as any;
 
-describe('readFileAsBase64 Method', () => {
-  it('converts a file to a base64 string', async () => {
-
-    // Create a mock file
-    const mockFile = new File([''], 'test.png', { type: 'image/png' });
-      const { default: component } = await import('../app.vue');
+describe("readFileAsBase64 Method", () => {
+  it("converts a file to a base64 string", async () => {
+    global.FileReader = MockFileReader as any;
+    const mockFile = new File([""], "test.png", { type: "image/png" });
+    const { default: component } = await import("../app.vue");
 
     // Directly or indirectly test readFileAsBase64
     const base64Result = await component.methods?.readFileAsBase64(mockFile);
@@ -86,21 +45,26 @@ describe('readFileAsBase64 Method', () => {
     // Verify the result matches the expected base64 string
     expect(base64Result).toBe(mockBase64String);
   });
-})
+});
 
-// examples of tests that I thought to implement:
-  // Test handleDragEnter modifies the component's state or UI to indicate an item is being dragged over.
-  // Test handleDragOver maintains the UI indication that an item is draggable over the target area.
-  // Test handleDragLeave removes any UI indication that an item is being dragged over when the drag leaves the target area.
-  // Test handleDrop processes dropped files correctly, filtering by type and size, and updates the uploadedImages array.
-  // Test openFileInput triggers the file input dialog when the upload button is clicked.
-  // Test handleFileUpload filters out invalid files and updates the state with valid files' data.
-  // Test showLoadingToast sets loading to true and displays a loading toast.
-  // Test showToast displays appropriate messages for different actions (e.g., upload success, error).
-  // Test readFileAsBase64 correctly converts files to base64 strings.
-  // Test uploadImageToServer sends the correct request to the server and handles the response properly.
-  // Test removeImage removes the correct image from uploadedImages when the delete button is clicked.
-  // Test the initial state of loading is false, and it changes correctly during file upload operations.
-  // Test the drag-and-drop area changes its appearance or behavior when files are dragged over it.
-  // Test error handling for the file upload process, including displaying messages for exceeding size limits or unsupported file types.
-  // Test the successful upload updates the UI with new images and clears the loading state.
+
+
+
+// examples of  unit tests that I thought to implement:
+
+    // openFileInput: Test that invoking openFileInput programmatically triggers a click event on the file input element. This can be checked by spying on the click method of the file input element.
+
+    // handleFileUpload - File Filtering: Verify that handleFileUpload correctly identifies and separates valid and invalid files based on the predefined conditions (type and size) when provided with a mock event object containing a FileList.
+
+    // readFileAsBase64 - Success: Mock a File input to readFileAsBase64 and ensure it resolves with a correct base64 string representation of the file content.
+
+    // readFileAsBase64 - Error Handling: Simulate a read error in readFileAsBase64 to ensure it rejects with the expected error message.
+
+    // showLoadingToast: Test that calling showLoadingToast updates the loading state to true.
+
+    // showToast: Verify that showToast creates a toast with the correct message and style settings. Since this involves external library Toastify, you might mock Toastify to ensure showToast calls it with the expected parameters.
+
+    // uploadImageToServer - Validation: Test that uploadImageToServer handles empty input correctly by not proceeding with any fetch calls and optionally setting an appropriate state or displaying a message.
+
+    // removeImage: Ensure that invoking removeImage with a valid index updates the uploadedImages array by removing the specified image.
+
