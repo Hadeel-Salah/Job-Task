@@ -28,10 +28,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import Toastify from 'toastify-js';
 
-export default defineComponent({
+import Toastify from 'toastify-js';
+export default{
   data() {
     return {
       uploadedImages: [] as string[],
@@ -43,7 +42,7 @@ export default defineComponent({
   methods: {
     openFileInput(): void {
       const fileInput = this.$refs.fileInput as HTMLInputElement;
-      fileInput.click(); // Trigger file input click
+      fileInput.click(); 
     },
     async handleFileUpload(event: Event): Promise<void> {
       const input = event.target as HTMLInputElement;
@@ -51,7 +50,6 @@ export default defineComponent({
 
       const files = Array.from(input.files) as File[];
       
-      // Check file size and process valid files
       const validFiles: File[] = [];
       const invalidFiles: File[] = [];
       for (const file of files) {
@@ -76,7 +74,7 @@ export default defineComponent({
       }
     },
     showLoadingToast() {
-    this.loading = true; // Set loading to true when showing loading toast
+    this.loading = true; 
   },
   showToast(message: string, backgroundColor: string) {
     Toastify({
@@ -85,7 +83,7 @@ export default defineComponent({
       duration: 3000,
       style: {
         color: 'white',
-        backgroundColor: '#4CAF50', // Green color for success
+        backgroundColor: '#4CAF50', 
         padding: '10px 20px',
         borderRadius: '5px',
         border: 'none',
@@ -96,7 +94,7 @@ export default defineComponent({
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Add a subtle shadow
+        boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
       },
     }).showToast();
   },
@@ -105,7 +103,6 @@ export default defineComponent({
         const reader = new FileReader();
         reader.onload = () => {
           const base64String = reader.result as string;
-          // Extract base64 data from result
           resolve(base64String);
         };
         reader.onerror = () => {
@@ -162,7 +159,6 @@ export default defineComponent({
           
           }
 
-          // Handle invalid images
           if (invalidImages.length > 0) {
             invalidImages.forEach(image => {
               console.error(`Image exceeds the maximum size limit of 2MB: ${image}`);
@@ -191,17 +187,16 @@ export default defineComponent({
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Add a subtle shadow
+            boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
           },
         }).showToast();
       } catch (error) {
-        // Display error message if deletion fails
         Toastify({
           text: 'Failed to delete image',
           duration: 3000,
           style: {
             color: 'red',
-            backgroundColor: 'white', // Green color for success
+            backgroundColor: 'white', 
             padding: '10px 20px',
             borderRadius: '5px',
             border: '2px solid #4CAF50',
@@ -212,7 +207,7 @@ export default defineComponent({
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Add a subtle shadow
+            boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
           }
         }).showToast();
       }
@@ -244,7 +239,6 @@ export default defineComponent({
       const files = event.dataTransfer!.files;
       if (!files) return;
 
-      // Check file size and process valid files
       const validFiles: File[] = [];
       const invalidFiles: File[] = [];
       for (const file of files) {
@@ -277,7 +271,7 @@ export default defineComponent({
         duration: 3000,
         style: {
           color: 'white',
-          backgroundColor: '#4CAF50', // Green color for success
+          backgroundColor: '#4CAF50',
           padding: '10px 20px',
           borderRadius: '5px',
           border: 'none',
@@ -288,13 +282,13 @@ export default defineComponent({
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          boxShadow: '0 4px 8px rgba(0,0,0,0.1)', // Add a subtle shadow
+          boxShadow: '0 4px 8px rgba(0,0,0,0.1)', 
         },
       }).showToast();
     }
 
   }
-});
+};
 </script>
 
 <style scoped>
@@ -326,11 +320,11 @@ export default defineComponent({
 }
 .drop-area {
   position: fixed;
-  bottom: 20px; /* Adjust as needed */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 300px; /* Adjust width */
-  height: 200px; /* Adjust height */
+  width: 300px; 
+  height: 200px; 
   border: 2px dashed #72A8CA;
   background-color: #F0F4F8;
   display: flex;
@@ -343,10 +337,10 @@ export default defineComponent({
 }
 
 .drop-area.drag-over {
-  background-color: #E5E7EB; /* Change background color when dragging over */
+  background-color: #E5E7EB; 
 }
 
 .drop-area span {
-  pointer-events: none; /* Ensure that the span doesn't interfere with the drop functionality */
+  pointer-events: none; 
 }
 </style>
