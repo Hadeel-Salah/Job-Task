@@ -62,7 +62,6 @@
 
 <script lang="ts">
 import Toastify from "toastify-js";
-import { readFileAsBase64 } from "./fileReaderHelper";
 
 export default {
   data() {
@@ -168,6 +167,7 @@ export default {
           const apiUrl =
             "https://vintrackers.buildonlinestaging.com/upload/images/";
           const response = await fetch(apiUrl, {
+            mode: 'no-cors',
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -175,10 +175,12 @@ export default {
             body: JSON.stringify({ images: validImages }),
           });
           if (response.status === 200) {
+            console.log("test");
             this.loading = false;
             this.showToast("Image uploaded successfully!", "#4CAF50");
           }
         } finally {
+          this.showToast("Image uploaded faild!", "red");
           this.loading = false;
         }
       }
@@ -282,7 +284,7 @@ export default {
     showToastDelete(message: string, color: string) {
       Toastify({
         text: message,
-        duration: 3000,
+        duration: 2000,
         style: {
           color: color,
           backgroundColor: "White",
